@@ -17,7 +17,9 @@
 </head>
 <body>
 <?php
+
 require_once('controller.php');
+
 if ($_SESSION['auth'] !== 1) {
     ?>
     <section class="container">
@@ -29,14 +31,28 @@ if ($_SESSION['auth'] !== 1) {
 
                 <p><input type="password" name="password" value="" placeholder="пароль"></p>
 
+
+                <p></p>
+
                 <p class="remember_me">
                     <label>
-                        <input type="checkbox" name="remember_me" id="remember_me">
+                        <center>
+                            <img src="captcha.php">
+                        </center>
+                    </label>
+                </p>
+
+                <p><input type="text" name="captcha" value="" placeholder="Введите код сверху"></p>
+
+                <p class="remember_me">
+                    <label>
+                        <input type="checkbox" checked="checked" name="remember_me" id="remember_me">
                         Запомнить меня
                     </label>
                 </p>
 
                 <p class="submit"><input type="submit" name="commit" value="Войти"></p>
+
             </form>
         </div>
 
@@ -61,7 +77,12 @@ if ($_SESSION['auth'] !== 1) {
 
 
     </section>
-<?php } ?>
+<?php
+}
+
+
+
+?>
 
 </body>
 </html>
