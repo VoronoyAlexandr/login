@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: Sasha
- * Date: 21.07.14
- * Time: 13:06
- */
 class DataBase
 {
     static public $PDOInstance;
