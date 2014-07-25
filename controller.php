@@ -16,7 +16,7 @@ if (isset($_POST['login']) && !empty($_POST['login']) && isset($_POST['password'
                 $_SESSION['auth'] = 1;
                 $_SESSION['name'] = $items['login'];
             } else {
-
+                echo "WTF";
             }
         }
     }

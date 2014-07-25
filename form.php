@@ -7,29 +7,41 @@
 <html class="lt-ie9" lang="en"> <![endif]-->
 <!--[if gt IE 8]><!-->
 <html lang="en"> <!--<![endif]-->
+<script
+    type="text/javascript"
+    src="http://code.jquery.com/jquery-git2.js"
+    ></script>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>Login Form</title>
     <link rel="stylesheet" href="css/style.css">
     <!--[if lt IE 9]>
-    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script src="http:://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 </head>
 <body>
+<script>
+    $(document).on('mousedown', function (e) {
+
+        console.log('Top: ' + $(this).offset().top + ', Left: ' + $(this).offset().left);
+    });
+</script>
 <?php
 
 require_once('controller.php');
 
 if ($_SESSION['auth'] !== 1) {
     ?>
-    <section class="container">
+    <section id="main" class="container">
         <div class="login">
             <h1>Форма авторизации</h1>
 
-            <form method="post" action="">
-                <p><input type="text" name="login" value="" placeholder="Имя"></p>
+            <form action="">
+                <p><span class="erLogin"></span><input type="text" name="login" value="" id="login" placeholder="Имя">
+                </p>
 
-                <p><input type="password" name="password" value="" placeholder="пароль"></p>
+                <p><span class="erPassword"></span><input type="password" name="password" value="" id="password"
+                                                          placeholder="пароль"></p>
 
 
                 <p></p>
@@ -42,7 +54,8 @@ if ($_SESSION['auth'] !== 1) {
                     </label>
                 </p>
 
-                <p><input type="text" name="captcha" value="" placeholder="Введите код сверху"></p>
+                <p><span class="erCaptcha"></span><input type="text" name="captcha" value="" id="captcha"
+                                                         placeholder="Введите код сверху"></p>
 
                 <p class="remember_me">
                     <label>
@@ -51,18 +64,20 @@ if ($_SESSION['auth'] !== 1) {
                     </label>
                 </p>
 
-                <p class="submit"><input type="submit" name="commit" value="Войти"></p>
+                <p class="submit"><input type="button" name="commit" onclick="doSomething()" value="Мне повезет?"><span
+                        class="erUser"></span></p>
+
 
             </form>
         </div>
 
         <div class="login-help">
-            <p>Забыли пароль? <a href="index.html">Так Вам и надо!</a>.</p>
+            <p>Забыли пароль? <a href="#">Так Вам и надо!</a>.</p>
         </div>
     </section>
 <?php } else { ?>
-    <section class="container">
-        <div class="login">
+    <section id="success" class="container">
+    <div class="login">
             <h1>Форма авторизации</h1>
 
             <form method="post" action="">
@@ -83,6 +98,38 @@ if ($_SESSION['auth'] !== 1) {
 
 
 ?>
+<script>
 
+    function doSomething() {
+        if ($('#login').val() === "") {
+            $('.erLogin').html("Пустой логин");
+        }
+        if ($('#password').val() === '') {
+            $('.erPassword').html("Пустой пароль");
+        }
+        if ($('#captcha').val() === '') {
+            $('.erCaptcha').html("Неверная каптча!");
+        }
+
+        $.ajax({
+
+            type: "post",
+            data: "login=" + $('#login').val() + "&password=" + $('#password').val() + "&captcha=" + $('#captcha').val(),
+            success: function (resp) {
+                if (resp === "") {
+                    $('.erUser').html("Нет");
+                } else {
+                    location.reload();
+                }
+            },
+            error: function () {
+                alert("Error!");
+            }
+        });
+
+    }
+
+
+</script>
 </body>
 </html>
